@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorator="layout">
+<head>
+    <title>PEI Application</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">Upload file</h1>
+
+
+<div layout:fragment="content" class="container">
+    <form enctype="multipart/form-data" action="/secure/uploadFile" method="post">
+        <input type="file" name="file" />
+        <div class="form-actions">
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>PEI Application</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="navbar">
+			<div class="navbar-inner">
+					<th:block sec:authorize="isAuthenticated()">
+					<ul>
+						<li>Logged in user: <span th:text="${#authentication.getPrincipal().getUsername()}"></span></li>
+						<li>Email: <span th:text="${email}"></span></li>
+						<li>Last Login Time is: <span th:text="${datelastlogin}"></span></li>
+					</ul>
+					</th:block>					
+			</div>
+			<div>
+				<h3><a title="home" th:href="@{/secure/files}">home</a></h3>
+			</div>
+			<th:block sec:authorize="!isAuthenticated()">
+				<div>
+					<a th:href="@{/login}"> Log In</a>
+				</div>
+			</th:block>
+			<th:block sec:authorize="isAuthenticated()">
+				<div class="pull-right">
+					<a title="Log out" th:href="@{/logout}">Log out</a>
+				</div>
+			</th:block>
+			<th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+				<div>
+					<a th:href="@{/secure/user/add}">Add new user</a>
+				</div>
+			</th:block>
+		</div>
+		<h1 layout:fragment="header">PEI Application</h1>
+		<div layout:fragment="content">Content</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorator="layout">
+<head>
+<title>PEI Application</title>
+</head>
+<body>
+	<h1 layout:fragment="header">All files</h1>
+	
+	
+	<div layout:fragment="content" class="container">
+		<div class="pull-right">
+			<a href="/secure/uploadFile">Upload file</a>
+		</div>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<td>File</td>
+					<td>Action</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${files.empty}">
+					<td colspan="3">No files</td>
+				</tr>
+				<tr th:each="file : ${files}">
+					<td th:text="${file}"></td>
+					<td>
+					<th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+						<a th:href="@{'/secure/files/download/'+ ${file}}">Download</a>
+					</th:block>
+					<th:block sec:authorize="hasAuthority('ROLE_USER')">
+						<a th:href="@{'/secure/files/download/'+ ${id} + '_' + ${file}}">Download</a>
+					</th:block>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
